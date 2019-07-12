@@ -1,0 +1,17 @@
+*{
+    text-align: center;
+}
+
+#gameHeader {
+    font-size: 36px;
+    color: blue;
+    margin: 20px;
+}
+.container {
+    margin:auto;
+    background-color: plum;
+    width: 600px;
+    height: auto;
+    font-size: 22px;
+    
+}
