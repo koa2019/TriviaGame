@@ -1,17 +1,21 @@
-$(document).ready(function () {
+window.onload = function loadGame () {
 
-    // prevents the clock from being sped up unnecessarily
-    var clockRunning = false;
-    var time = 5;   //countdown starting point
-    var timer;      //will hold setTimeOut()
+var clockRunning = false;  //sets clocks starting point to off
+var time = 5;   //countdown starting point
+var timer;      //will hold setTimeOut()
+
 
     $('#timeRemaining').text("00:05");
-    // $('#timeRemaining').hide();
+    $('#timeRemaining').hide();
+
+
+// $(document).ready(function () {
 
     $("#start").on('click', startGame);
-    $('#stop').on('click', stop);
+    $("#stop").on('click', stop);
 
     ////////////FUNCTIONS//////////
+
     function startGame() {
 
         $("#start").hide();
@@ -21,7 +25,7 @@ $(document).ready(function () {
 
             timer = setInterval(countdown, 1000);
 
-            clockRunning = true;            
+            clockRunning = true;
         }
     }
 
@@ -38,29 +42,35 @@ $(document).ready(function () {
 
         showCountdown();
 
-        if (time <= 0) {
+        if (time < 0) {
 
+            timeUp();
             stop();
+
+            setTimeout(reset, 3000);
         }
         console.log('time: ' + time);
     }
 
-    function showCountdown () {
+    function showCountdown() {
 
         $('#timeRemaining').text('00:0' + time);
-
     }
 
-    // function reset() {
+    function timeUp() {
 
-    //     $("#timeRemaining").text("00:05");
-    // }
+        $("#timeRemaining").text("Game Over!");
+    }
 
-    // function timeUp() {
+    function reset() {
 
-    //     $("#timeRemaining").text("Game Over!");
-    //     alert("Time's Up!");
-    // }    
+        // time = 5;
+
+        // $("#timeRemaining").text("00:05");
+
+        // startGame();
+        window.location.reload();
+    }
 
     // function timeConverter(t) {
 
@@ -81,4 +91,5 @@ $(document).ready(function () {
     //     return minutes + ":" + seconds;
     // }
 
-});
+// });
+}
