@@ -1,48 +1,84 @@
-$(document).ready(function() { 
+$(document).ready(function () {
 
-// prevents the clock from being sped up unnecessarily
-var clockRunning = false;
-var time = 10;
-var timer;      //will hold setTimeOut()
+    // prevents the clock from being sped up unnecessarily
+    var clockRunning = false;
+    var time = 5;   //countdown starting point
+    var timer;      //will hold setTimeOut()
 
+    $('#timeRemaining').text("00:05");
+    // $('#timeRemaining').hide();
 
-$("#start").on('click', startGame);
+    $("#start").on('click', startGame);
+    $('#stop').on('click', stop);
 
-$('#timeRemaining').hide();
+    ////////////FUNCTIONS//////////
+    function startGame() {
 
-////////////FUNCTIONS//////////
-function startGame() {
+        $("#start").hide();
+        $('#timeRemaining').show();
 
-    $("#start").hide();
+        if (!clockRunning) {
 
-    $('#timeRemaining').text("00:00");
-    
-    $('#timeRemaining').show();
+            timer = setInterval(countdown, 1000);
 
-    if (!clockRunning) {
-        timer = setInterval(countdown, 10000);
-        clockRunning = true;
-      }
-}
-function countdown () {
+            clockRunning = true;            
+        }
+    }
 
-    time--;
-}
+    function stop() {
 
-function setTimer() {
+        clearInterval(timer);
 
-   timer = setTimeout(5000);
-   $('timeRemaining').text(timer);
-}
+        clockRunning = false;
+    }
 
-function timeUp() {
+    function countdown() {
 
-    $("#timeRemaining").text("Game Over!");
-    alert("Time's Up!");
-}
-function reset() {
+        time--;
 
-    $("#timeRemaining").text("00:00");
-}
+        showCountdown();
+
+        if (time <= 0) {
+
+            stop();
+        }
+        console.log('time: ' + time);
+    }
+
+    function showCountdown () {
+
+        $('#timeRemaining').text('00:0' + time);
+
+    }
+
+    // function reset() {
+
+    //     $("#timeRemaining").text("00:05");
+    // }
+
+    // function timeUp() {
+
+    //     $("#timeRemaining").text("Game Over!");
+    //     alert("Time's Up!");
+    // }    
+
+    // function timeConverter(t) {
+
+    //     var minutes = Math.floor(t / 60);
+    //     var seconds = t - (minutes * 60);
+
+    //     if (seconds < 10) {
+    //         seconds = "0" + seconds;
+    //     }
+
+    //     if (minutes === 0) {
+    //         minutes = "00";
+    //     }
+    //     else if (minutes < 10) {
+    //         minutes = "0" + minutes;
+    //     }
+
+    //     return minutes + ":" + seconds;
+    // }
 
 });
