@@ -1,35 +1,30 @@
+
+var clockRunning = false;  //sets clocks starting point to off
+var time = 5;   //countdown starting point
+var timer;      //will hold setTimeOut()
+
+/************* trivia questions variables ******/
+var numCorrect = 0;
+var numWrong = 0;
+var unanswered = 0;
+var userInput;
+
+var questions = [
+    {
+
+        q1: "How old is Hello Kitty?",
+        opt1: [" 45 ", " 20 ", " 7 "],
+        answer1: '45',
+    },
+    { //compare answer based on value
+        q2: "How old is Kerope ",
+        opt2: [" 5 ", " 70 ", " 50 "],
+        answer2: '50',
+    }
+    
+];
+
 window.onload = function loadGame() {
-
-    var clockRunning = false;  //sets clocks starting point to off
-    var time = 5;   //countdown starting point
-    var timer;      //will hold setTimeOut()
-
-    /************* trivia questions variables ******/
-    var numCorrect = 0;
-    var numWrong = 0;
-    var unanswered = 0;
-    var userInput;
-
-    var trivia = {
-        questions: [
-            {
-                q1: "Question 1. Pick a b c ",
-                q2: "Question 3. Pick a b c",
-                q3: "Question 2. Pick a b c",
-            }
-        ],
-        options: [
-            {
-                o1: [" a1 ", " b1 ", " c1 "],
-                o2: [" a2 ", " b2 ", " c2 "],
-                o3: [" a3 ", " b3 ", " c3 "],
-            }
-        ],
-        answers: [1, 2, 0]     
-        
-    };
-    console.log(trivia.questions[0].q1);   
-
 
     $('#timeRemaining').text("00:05");
     $('#timeRemaining').hide();
@@ -38,20 +33,28 @@ window.onload = function loadGame() {
     showQuestions();
 
 
-
-
-
     ////////////FUNCTIONS//////////
+    function showQuestions() {
 
+        // for(var i = 1; i <= questions.length;i++) {
+
+        $(".question1").append(Object.values(questions[0].q1));
+        $(".question2").append(Object.values(questions[1].q2));
+
+        // $('.options').append(Object.values(questions[1] ));
+
+        // }
+    }
+    function isCorrect(){
+        
+    }
     function startGame() {
 
         $("#start").hide();
         $('#timeRemaining').show();
 
         if (!clockRunning) {
-
             timer = setInterval(countdown, 1000);
-
             clockRunning = true;
         }
 
@@ -93,21 +96,12 @@ window.onload = function loadGame() {
     function reset() {
 
         // time = 5;
-
         // $("#timeRemaining").text("00:05");
-
         // startGame();
         window.location.reload();
     }
 
-    function showQuestions() {
-        for (var i = 0; i < 3; i++) {
-            // $('.questions').append(trivia[0].q1[0]);
-            $(".questions").text(trivia.questions[0].q1);
-            $('.options').text(trivia.options[0].o1);
-            // console.log(trivia[0].q1[0]);
-        }
-    }
+
 
     // function timeConverter(t) {
 
