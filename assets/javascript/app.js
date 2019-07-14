@@ -24,12 +24,13 @@ var questions = [
     
 ];
 
-window.onload = function loadGame() {
+window.onload = function () {
 
     $('#timeRemaining').text("00:05");
     $('#timeRemaining').hide();
     $("#start").on('click', startGame);
     $("#stop").on('click', stop);
+    $('.options').on('click', isCorrect);
     showQuestions();
 
 
@@ -63,21 +64,18 @@ window.onload = function loadGame() {
     function stop() {
 
         clearInterval(timer);
-
         clockRunning = false;
     }
 
     function countdown() {
 
         time--;
-
         showCountdown();
 
         if (time < 0) {
 
             timeUp();
             stop();
-
             setTimeout(reset, 3000);
         }
         console.log('time: ' + time);
@@ -91,6 +89,11 @@ window.onload = function loadGame() {
     function timeUp() {
 
         $("#timeRemaining").text("Game Over!");
+        $('.triviaDataText').hide();
+        $('.results').append('Correct: ' + numCorrect );
+        $('.results').append('Wrong' + numWrong);
+        $('.results').append('Unanswered: ' + unanswered);
+        
     }
 
     function reset() {
