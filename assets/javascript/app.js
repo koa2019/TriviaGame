@@ -8,6 +8,9 @@ var numCorrect = 0;
 var numWrong = 0;
 var unanswered = 0;
 var userInput;
+var optInput;
+var inputVal;
+var optValue = ["a", "b", "c"];
 
 var questions = [
     {
@@ -21,7 +24,7 @@ var questions = [
         opt2: [" 5 ", " 70 ", " 50 "],
         answer2: '50',
     }
-    
+
 ];
 
 window.onload = function () {
@@ -32,9 +35,22 @@ window.onload = function () {
     $("#stop").on('click', stop);
     $('.options').on('click', isCorrect);
     showQuestions();
-
+    renderOptions();
 
     ////////////FUNCTIONS//////////
+
+    function renderOptions() {
+        //creating a loop to generate 3 different options for a question
+        for (var x = 0; x < 3; x++) {
+            optionInput = $('<input type = "radio" />'); //create input on HTML & assign all input tags to a variable
+            optionVal = optValue[x];             //call function & assign data to variable
+            optionInput.attr('value', optionVal); //create new HTML attr  for input tags & call function to assign its value a, b, c
+            console.log(optionVal);
+
+            $('.options1').append(optionInput);
+            console.log(optionInput)
+        }
+    }
     function showQuestions() {
 
         // for(var i = 1; i <= questions.length;i++) {
@@ -46,8 +62,8 @@ window.onload = function () {
 
         // }
     }
-    function isCorrect(){
-        
+    function isCorrect() {
+
     }
     function startGame() {
 
@@ -90,10 +106,10 @@ window.onload = function () {
 
         $("#timeRemaining").text("Game Over!");
         $('.triviaDataText').hide();
-        $('.results').append('Correct: ' + numCorrect );
-        $('.results').append('Wrong' + numWrong);
-        $('.results').append('Unanswered: ' + unanswered);
-        
+        $('#correct').append('Correct: ' + numCorrect);
+        $('#wrong').append('Wrong' + numWrong);
+        $('#unanswered').append('Unanswered: ' + unanswered);
+
     }
 
     function reset() {
