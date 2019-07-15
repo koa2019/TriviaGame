@@ -9,23 +9,21 @@ var numWrong = 0;
 var unanswered = 0;
 var userInput;
 var optInput;
-var inputVal;
-var optValue = ["a", "b", "c"];
+var optVal;
+var optValArr = ["a", "b", "c"];
 
-var questions = [
-    {
+var questions = 
+    [
+     "How old is Hello Kitty?",
+     "How old is Kerope? "
+    ];
 
-        q1: "How old is Hello Kitty?",
-        opt1: [" 45 ", " 20 ", " 7 "],
-        answer1: '45',
-    },
-    { //compare answer based on value
-        q2: "How old is Kerope ",
-        opt2: [" 5 ", " 70 ", " 50 "],
-        answer2: '50',
-    }
+var options = {
+    opt0: [" 45 ", " 20 ", " 7 "],
+    opt1: [" 5 ", " 70 ", " 50 "]
+};
 
-];
+var answers = ["a", "c"];
 
 window.onload = function () {
 
@@ -35,36 +33,50 @@ window.onload = function () {
     $("#stop").on('click', stop);
     $('.options').on('click', isCorrect);
     showQuestions();
-    renderOptions();
 
     ////////////FUNCTIONS//////////
 
     function renderOptions() {
         //creating a loop to generate 3 different options for a question
         for (var x = 0; x < 3; x++) {
-            optionInput = $('<input type = "radio" />'); //create input on HTML & assign all input tags to a variable
-            optionVal = optValue[x];             //call function & assign data to variable
-            optionInput.attr('value', optionVal); //create new HTML attr  for input tags & call function to assign its value a, b, c
-            console.log(optionVal);
+            optInput = $('<input type = "radio" />'); //create input on HTML & assign all input tags to a variable
+            optVal = optValArr[x];             //call function & assign data to variable
+            optInput.attr('value', optVal); //create new HTML attr  for input tags & call function to assign its value a, b, c
+            console.log('input value = ' + optVal);
+            optInput.attr('id', 'opt' + optVal);  //create id HTML attr & assign value to be referenced
+            
+            optInput.text(options.opt0[x]);
+            // optInput.text(options.opt1[x]);
 
-            $('.options1').append(optionInput);
-            console.log(optionInput)
+            $('.options1').append(optInput);
+            // $('.options1').append(optInput);
+
+            $('#opt' + optVal).on('click', function() {
+
+                userInput = $(this).attr('value'); //this represents whichever radio input user clicks & assigns it value to variable
+
+                if(userInput == answers[x]) {
+                    isCorrect();
+                }
+                else {
+                    isWrong();
+                }
+            })
         }
     }
     function showQuestions() {
 
-        // for(var i = 1; i <= questions.length;i++) {
+        // for (var x = 0; x < questions.length; x++) {
 
-        $(".question1").append(Object.values(questions[0].q1));
-        $(".question2").append(Object.values(questions[1].q2));
-
-        // $('.options').append(Object.values(questions[1] ));
-
+        //     $(".question" ).text(questions[x] );        
         // }
-    }
-    function isCorrect() {
+        $(".question0").append(Object.values(questions[0]));
+        $(".question1").append(Object.values(questions[1]));
+        
+        renderOptions();
 
     }
+    
     function startGame() {
 
         $("#start").hide();
@@ -78,7 +90,6 @@ window.onload = function () {
     }
 
     function stop() {
-
         clearInterval(timer);
         clockRunning = false;
     }
@@ -89,7 +100,6 @@ window.onload = function () {
         showCountdown();
 
         if (time < 0) {
-
             timeUp();
             stop();
             setTimeout(reset, 3000);
@@ -111,17 +121,15 @@ window.onload = function () {
         $('#unanswered').append('Unanswered: ' + unanswered);
 
     }
-
     function reset() {
-
-        // time = 5;
-        // $("#timeRemaining").text("00:05");
-        // startGame();
         window.location.reload();
     }
-
-
-
+    function isCorrect() {
+        numCorrect++;
+    }
+    function isWrong() {
+        numWrong++;
+    }
     // function timeConverter(t) {
 
     //     var minutes = Math.floor(t / 60);
