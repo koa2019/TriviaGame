@@ -40,56 +40,64 @@ window.onload = function () {
 
     ////////////FUNCTIONS//////////
 
-    function renderOptions() {
-        //creating a loop to generate 3 different options for a question
-        for (x = 0; x < 3; x++) {
+    // function renderOptions() {
+    //     //creating a loop to generate 3 different options for a question
+    //     for (x = 0; x < 3; x++) {
 
-            //declaring new variables & setting their value to
-            //the functions return value
-            var radio = makeRadio(x);
-            var radioLabel = makeLabel(x);
+    //         //declaring new variables & setting their value to
+    //         //the functions return value
+    //         var radio = makeRadio(x);
+    //         var radioLabel = makeLabel(x);
 
-            //adding the values of radio & radioLabel to html id=options
-            $('.options').append(radio);
-            $('.options').append(radioLabel);
+    //         //adding the values of radio & radioLabel to html id=options
+    //         $('.options').append(radio);
+    //         $('.options').append(radioLabel);
 
 
-            optInput.append(question0.opt0);
+    //         optInput.append(question0.opt0);
 
             
-            $('#opt' + optVal).on('click', function () {
+    //         $('').on('click', function () {
 
-                userInput = $(this).attr('value'); //this represents whichever radio input user clicks & assigns it value to variable
+    //             userInput = $(this).attr('value'); //this represents whichever radio input user clicks & assigns it value to variable
 
-                if (userInput == answers[x]) {
-                    isCorrect();
-                }
-                else {
-                    isWrong();
-                }
-            })
-        }
+    //             if (userInput == answers[x]) {
+    //                 isCorrect();
+    //             }
+    //             else {
+    //                 isWrong();
+    //             }
+    //         })
+    //     }
+    // }
+    function gradeQuiz() {
+
     }
-    function makeRadio(x) {
+    function makeRadio(val, x) {
 
+        //need to set val to something
         optVal = optValArr[x];
 
+        //creates & returns an <input> with html attributes for.
         optInput = $("<input type='radio'/>")
         .attr('name', 'opt')
         .attr('value', optVal)
         .attr('id', x + optVal);
+
         return optInput;
         
 
         console.log('options value: ' + optVal)
     }
 
-    function makeLabel(val) {
+    //function returns a html label tag with text & creates a "for" attribute for ...?
+    function makeLabel(val, x) {
 
         var optLabel = $("<label>"); //create label
 
-        optLabel.text(val);
-        optLabel.attr("for", x + val); 
+        optLabel.text(val); //writes answers[] value to <label>
+        optLabel.attr("for", x + val);  //adding a "for" attribute...?
+
         return optLabel;
     }
     function showQuestions() {
@@ -104,13 +112,18 @@ window.onload = function () {
             for (var y = 0; y< availableOptions.length; y++) {
                 var radio = makeRadio(availableOptions[y]);
                 var label = makeLabel(availableOptions[y])
+
+                optionsContainer.text(radio);
+                optionsContainer.append(label);
+                
+                radio.on('click', gradeQuiz);
             }
  
         }
         // $(".question0").append(Object.values(question0.q0) );
         // $(".question1").append(Object.values(question1.q1) );
 
-        renderOptions();
+        // renderOptions();
 
     }
 
