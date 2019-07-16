@@ -9,27 +9,15 @@ var numCorrect = 0;
 var numWrong = 0;
 var unanswered = 0;
 var userInput;
-var optInput;
-var optVal;
-var optValArr = ["a", "b", "c"];
+var optInput;  //will reference <inuput>
+var optVal;   //will reference optValArr[x]
+var optValArr = ["a", "b", "c"];  //<input values=" " />
 
-var question0 =
-{
-    q0: "How old is Hello Kitty?",
-    opt0: [" 45 ", " 20 ", " 7 "],
-    answer0: "a"
-};
-
-var question1 =
-{
-    q1: "How old is Keroppi? ",
-    opt1: [" 5 ", " 70 ", " 50 "],
-    answer1: "c"
-
-};
-
+//questions object array. 
+//questions.length = 2. 
 var questions = [
-    {
+    { 
+        //1 object with 3 keys & 3 data values
         prompt: "How old is Hello Kitty?",
         answers: ["45", "20", "7"],
         correctAnswer: ""
@@ -56,9 +44,12 @@ window.onload = function () {
         //creating a loop to generate 3 different options for a question
         for (x = 0; x < 3; x++) {
 
+            //declaring new variables & setting their value to
+            //the functions return value
             var radio = makeRadio(x);
             var radioLabel = makeLabel(x);
 
+            //adding the values of radio & radioLabel to html id=options
             $('.options').append(radio);
             $('.options').append(radioLabel);
 
@@ -116,8 +107,8 @@ window.onload = function () {
             }
  
         }
-        $(".question0").append(Object.values(question0.q0) );
-        $(".question1").append(Object.values(question1.q1) );
+        // $(".question0").append(Object.values(question0.q0) );
+        // $(".question1").append(Object.values(question1.q1) );
 
         renderOptions();
 
