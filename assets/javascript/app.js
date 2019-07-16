@@ -41,7 +41,7 @@ window.onload = function () {
     ////////////FUNCTIONS//////////
 
     function gradeQuiz() {
-
+        console.log('clicked');
     }
     
     function makeRadio(val, questionIndex, answerIndex) {
