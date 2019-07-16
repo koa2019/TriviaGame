@@ -74,11 +74,12 @@ window.onload = function () {
                 var radio = makeRadio(availableOptions[y], x, y);
                 var label = makeLabel(availableOptions[y], x, y);
 
-                optionsContainer.text(radio);
-                optionsContainer.append(label);
+                $(".questions-container").append(radio);
+                $(".questions-container").append(label);
 
                 radio.on('click', gradeQuiz);
             }
+
  
         }      
     }
