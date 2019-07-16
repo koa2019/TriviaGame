@@ -5,7 +5,7 @@
 }
 
 #gameHeader {
-    font-size: 48px;
+    font-size: 68px;
     /* margin-bottom: 20px; */
     padding-top: 30px;
 }
@@ -38,4 +38,8 @@ button {
 }
 label {
     padding-right: 10px;
+}
+#timeRemaining {
+    margin:20px;
+    font-size: 50px;
 }
