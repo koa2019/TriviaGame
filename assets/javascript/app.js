@@ -4,6 +4,7 @@ var time = 5;   //countdown starting point
 var timer;      //will hold setTimeOut()
 
 /************* trivia questions variables ******/
+var x;
 var numCorrect = 0;
 var numWrong = 0;
 var unanswered = 0;
@@ -12,18 +13,33 @@ var optInput;
 var optVal;
 var optValArr = ["a", "b", "c"];
 
-var questions = 
-    [
-     "How old is Hello Kitty?",
-     "How old is Kerope? "
-    ];
-
-var options = {
+var question0 =
+{
+    q0: "How old is Hello Kitty?",
     opt0: [" 45 ", " 20 ", " 7 "],
-    opt1: [" 5 ", " 70 ", " 50 "]
+    answer0: "a"
 };
 
-var answers = ["a", "c"];
+var question1 =
+{
+    q1: "How old is Keroppi? ",
+    opt1: [" 5 ", " 70 ", " 50 "],
+    answer1: "c"
+
+};
+
+var questions = [
+    {
+        prompt: "How old is Hello Kitty?",
+        answers: ["45", "20", "7"],
+        correctAnswer: ""
+    },
+    {
+        prompt: "How old is Keroppi? ",
+        answers: ["5", "70", "50"],
+        correctAnswer: "50"
+    }
+]
 
 window.onload = function () {
 
@@ -38,24 +54,23 @@ window.onload = function () {
 
     function renderOptions() {
         //creating a loop to generate 3 different options for a question
-        for (var x = 0; x < 3; x++) {
-            optInput = $('<input type = "radio" />'); //create input on HTML & assign all input tags to a variable
-            optVal = optValArr[x];             //call function & assign data to variable
-            optInput.attr('value', optVal); //create new HTML attr  for input tags & call function to assign its value a, b, c
-            console.log('input value = ' + optVal);
-            optInput.attr('id', 'opt' + optVal);  //create id HTML attr & assign value to be referenced
+        for (x = 0; x < 3; x++) {
+
+            var radio = makeRadio(x);
+            var radioLabel = makeLabel(x);
+
+            $('.options').append(radio);
+            $('.options').append(radioLabel);
+
+
+            optInput.append(question0.opt0);
+
             
-            optInput.text(options.opt0[x]);
-            // optInput.text(options.opt1[x]);
-
-            $('.options1').append(optInput);
-            // $('.options1').append(optInput);
-
-            $('#opt' + optVal).on('click', function() {
+            $('#opt' + optVal).on('click', function () {
 
                 userInput = $(this).attr('value'); //this represents whichever radio input user clicks & assigns it value to variable
 
-                if(userInput == answers[x]) {
+                if (userInput == answers[x]) {
                     isCorrect();
                 }
                 else {
@@ -64,19 +79,50 @@ window.onload = function () {
             })
         }
     }
+    function makeRadio(x) {
+
+        optVal = optValArr[x];
+
+        optInput = $("<input type='radio'/>")
+        .attr('name', 'opt')
+        .attr('value', optVal)
+        .attr('id', x + optVal);
+        return optInput;
+        
+
+        console.log('options value: ' + optVal)
+    }
+
+    function makeLabel(val) {
+
+        var optLabel = $("<label>"); //create label
+
+        optLabel.text(val);
+        optLabel.attr("for", x + val); 
+        return optLabel;
+    }
     function showQuestions() {
 
-        // for (var x = 0; x < questions.length; x++) {
+        for (var x = 0; x < questions.length; x++) {
 
-        //     $(".question" ).text(questions[x] );        
-        // }
-        $(".question0").append(Object.values(questions[0]));
-        $(".question1").append(Object.values(questions[1]));
-        
+            var questionTitle = $("<h2>").text(questions[x].prompt)
+            $(".questions-container").append(questionTitle);
+
+            var optionsContainer = $("<div>");
+            var availableOptions = questions[x].answers;
+            for (var y = 0; y< availableOptions.length; y++) {
+                var radio = makeRadio(availableOptions[y]);
+                var label = makeLabel(availableOptions[y])
+            }
+ 
+        }
+        $(".question0").append(Object.values(question0.q0) );
+        $(".question1").append(Object.values(question1.q1) );
+
         renderOptions();
 
     }
-    
+
     function startGame() {
 
         $("#start").hide();
