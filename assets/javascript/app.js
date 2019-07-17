@@ -44,37 +44,36 @@ window.onload = function () {
 
     function gradeQuiz() {
 
-        $.each(questions, function (index) {
-          
-        // userInput = $(this).val();
-        userInput = $("input[name=opt0]:checked").val();  //CSS selector returns value of checked input based on each answer array
-        console.log('userInput = ' + userInput);
+        for (var x = 0; x < questions.length; x++) {
 
-        // var numCorrect = correct;
-        // var numWrong = wrong;
-        // var numUnAns = unanswered;
+            console.log('x = ' + x);
+            //CSS selector returns value of checked input based on each answer array
+            // groups of radios have a name of opt0 or opt1 where 0 and 1 represents the question number
+            userInput = $("input[name= opt" + x + " ]:checked").val();
 
-          console.log('index = ' + index);
+            var correctAnswer = questions[x].correctAnswer;
+            console.log('correctAnswer[x] = ' + correctAnswer);
+            console.log('userInput = ' + userInput);
+            console.log(userInput + ' =? ' + correctAnswer);
 
-        //     // var correctAns = questions[index].correctAnswer;
-        //     // console.log('Correct answer: ' + correctAns);
+            if (userInput === correctAnswer) {
+                isCorrect();
+                // console.log('inside if/else correct:  ' + correct);
+            }
+            else  {
+                isWrong();
+                // console.log('inside if/else wrong: ' + wrong);
+            }
 
-        // if (userInput == null || timer === 0) {
-        //     numUnAns = isUnanswered(unanswered);
-        //     console.log('unanswered: ' + numUnAns);
-        //     // $('#unanswered').text('Unanswered: ' + numUnAns);
-        // }
-        // // else if (userInput === correctAns) {
-        // //     numCorrect = isCorrect(correct);
-        // //     console.log('inside numCorrect =  ' + numCorrect);
-        // //     // $('#correct').text('Correct: ' + numCorrect);
-        // // }
-        // else {
-        //     numWrong = isWrong(wrong);
-        //     console.log('wrong: ' + numWrong);
-        //     // $('#wrong').text('Wrong' + numWrong);
-        // }
-        });
+            // else {
+            //     //  (userInput == null || timer <= 0) {
+            //     isUnanswered();
+            //     // console.log('inside if/else unanswered: ' + unanswered);
+            //     // }
+            // }
+        }
+        console.log('Correct =  ' + correct);
+        console.log('wrong: ' + wrong);
 
     }
 
@@ -151,7 +150,7 @@ window.onload = function () {
         if (time < 0) {
             timeUp();
             stop();
-            setTimeout(reset, 3000);
+            setTimeout(reset, 5000);
         }
         // console.log('time: ' + time);
     }
@@ -165,11 +164,9 @@ window.onload = function () {
 
         $("#timeRemaining").text("Game Over!");
         $('.triviaDataText').hide();
-
-        $('#correct').text('Correct: ' + correct);
-        $('#wrong').text('Wrong: ' + wrong);
-        $('#unanswered').text('Unanswered: ' + unanswered);
-
+        $('<input>').click(gradeQuiz);
+        showQuizResults();
+       
     }
 
     function reset() {
@@ -177,16 +174,19 @@ window.onload = function () {
     }
     function isCorrect() {
         correct++;
-        // console.log('isCorrect = ' + correct);
-        return correct;
+        console.log('isCorrect = ' + correct);
     }
     function isWrong() {
-        return wrong++;
+        wrong++;
     }
     function isUnanswered() {
-        return unanswered++;
+        unanswered++;
     }
-
+    function showQuizResults() {
+        $('#correct').text('Correct: ' + correct);
+        $('#wrong').text('Wrong: ' + wrong);
+        $('#unanswered').text('Unanswered: ' + unanswered);
+    }
     // function timeConverter(t) {
 
     //     var minutes = Math.floor(t / 60);
