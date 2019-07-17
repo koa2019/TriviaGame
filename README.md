@@ -1,4 +1,16 @@
-# TriviaGame
+#README
+This app allows user to click on start button which initiates a countdown timer and trivia questions for them to answer.
+
+User has an alloted time to answer questions before time runs out and the results of their choices are displayed.
+
+
+User is given 3 multiple choice answers for each question 
+
+User can pick only 1 multiple choice answer.
+
+When the timer runs out the app will automatically reload page to allow user to start fresh from the begining.
+
+# TriviaGame Instructions
 Basic Quiz (Timed Form)
 
 ![Basic](Images/1-basic.jpg)
@@ -16,7 +28,7 @@ Basic Quiz (Timed Form)
 * Don't forget to include a countdown timer.
 <!-- ****************************************************** -->
 
-psuedo
+#basic psuedo
 
 *Display start button
 
@@ -33,4 +45,5 @@ psuedo
     *display countdown timer
 
 }
+
 
