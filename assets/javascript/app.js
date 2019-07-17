@@ -1,9 +1,10 @@
 
+//----------timer variables----------------
 var clockRunning = false;  //sets clocks starting point to off
 var time = 5;   //countdown starting point
 var timer;      //will hold setTimeOut()
 
-/************* trivia questions variables ******/
+//----------quiz variables----------------
 var x;
 var xValue;
 var correct = 0;
@@ -15,7 +16,6 @@ var optVal;   //will reference optValArr[x]
 var optValArr = ["a", "b", "c"];  //<input values=" " />
 
 //questions object array. 
-//questions.length = 2. 
 var questions = [
     {
         //1 object with 3 keys & 3 data values
@@ -37,24 +37,36 @@ window.onload = function () {
     $('.triviaDataText').hide();
     $("#start").on('click', startGame);
     $("#stop").on('click', stop);  //for testing purposes only
-    // $('.options').on('click', isCorrect);
     showQuestions();
 
-    ////////////FUNCTIONS//////////
+    // ----------function definitions----------------
+    function startGame() {
 
+        $("#start").hide();
+        $('#timeRemaining').show();
+        $('.triviaDataText').show();
+
+        if (!clockRunning) {
+            timer = setInterval(countdown, 1000);
+            clockRunning = true;
+        }
+    }
+
+    // ----------quiz question functions----------------
     function gradeQuiz() {
 
         for (var x = 0; x < questions.length; x++) {
 
-            console.log('x = ' + x);
             //CSS selector returns value of checked input based on each answer array
             // groups of radios have a name of opt0 or opt1 where 0 and 1 represents the question number
             userInput = $("input[name= opt" + x + " ]:checked").val();
 
             var correctAnswer = questions[x].correctAnswer;
-            console.log('correctAnswer[x] = ' + correctAnswer);
+
+            console.log('correctAnswer[' + x + '] = ' + correctAnswer);
             console.log('userInput = ' + userInput);
             console.log(userInput + ' =? ' + correctAnswer);
+            console.log(' ');
 
             if (userInput === correctAnswer) {
                 isCorrect();
@@ -76,22 +88,10 @@ window.onload = function () {
         console.log('wrong: ' + wrong);
 
     }
-
-    function makeRadio(val, questionIndex, answerIndex) {
-
-        var optInput = $("<input type='radio'/>")
-            .attr('name', 'opt' + questionIndex)
-            .attr('value', val)
-            .attr('id', 'question-' + questionIndex + '-' + answerIndex); // id needs to be unique and should have no spaces
-        return optInput;
-    }
-
-    function makeLabel(val, questionIndex, answerIndex) {
-
-        var optLabel = $("<label>"); //create label html element
-        optLabel.text(val);  //write value of question[x].answer[x] to html page
-        optLabel.attr("for", 'question-' + questionIndex + '-' + answerIndex); // Matches the makeRadio id 
-        return optLabel;
+    function showQuizResults() {
+        $('#correct').text('Correct: ' + correct);
+        $('#wrong').text('Wrong: ' + wrong);
+        $('#unanswered').text('Unanswered: ' + unanswered);
     }
 
     function showQuestions() {
@@ -116,32 +116,47 @@ window.onload = function () {
                 $(".questions-container").append(radio);
                 $(".questions-container").append(label);
 
-                radio.on('click', gradeQuiz);
+                // radio.on('click', gradeQuiz);
                 // console.log('inside x = ' + x);
                 // console.log('inside correct answer =' + questions[x].correctAnswer); 
             }
             // console.log('outside x = ' + x);
             // console.log('outside correct answer = ' + questions[x].correctAnswer); 
-        }
+        }                
+        radio.on('click', gradeQuiz);
     }
 
-    function startGame() {
+    // ----------quiz display radio button functions----------------
+    function makeRadio(val, questionIndex, answerIndex) {
 
-        $("#start").hide();
-        $('#timeRemaining').show();
-        $('.triviaDataText').show();
-
-        if (!clockRunning) {
-            timer = setInterval(countdown, 1000);
-            clockRunning = true;
-        }
+        var optInput = $("<input type='radio'/>")
+            .attr('name', 'opt' + questionIndex)
+            .attr('value', val)
+            .attr('id', 'question-' + questionIndex + '-' + answerIndex); // id needs to be unique and should have no spaces
+        return optInput;
     }
 
-    function stop() {
-        clearInterval(timer);
-        clockRunning = false;
+    function makeLabel(val, questionIndex, answerIndex) {
+
+        var optLabel = $("<label>"); //create label html element
+        optLabel.text(val);  //write value of question[x].answer[x] to html page
+        optLabel.attr("for", 'question-' + questionIndex + '-' + answerIndex); // Matches the makeRadio id 
+        return optLabel;
     }
 
+    // ----------quiz increase/decrease functions----------------
+    function isCorrect() {
+        correct++;
+        // console.log('isCorrect = ' + correct);
+    }
+    function isWrong() {
+        wrong++;
+    }
+    function isUnanswered() {
+        unanswered++;
+    }
+
+    //--------------Timer Functions-----------------    
     function countdown() {
 
         time--;
@@ -154,38 +169,23 @@ window.onload = function () {
         }
         // console.log('time: ' + time);
     }
-
+    function stop() {
+        clearInterval(timer);
+        clockRunning = false;
+    }
+    function reset() {
+        window.location.reload();
+    }
     function showCountdown() {
 
         $('#timeRemaining').text('00:0' + time);
     }
-
     function timeUp() {
 
         $("#timeRemaining").text("Game Over!");
         $('.triviaDataText').hide();
-        $('<input>').click(gradeQuiz);
         showQuizResults();
        
-    }
-
-    function reset() {
-        window.location.reload();
-    }
-    function isCorrect() {
-        correct++;
-        console.log('isCorrect = ' + correct);
-    }
-    function isWrong() {
-        wrong++;
-    }
-    function isUnanswered() {
-        unanswered++;
-    }
-    function showQuizResults() {
-        $('#correct').text('Correct: ' + correct);
-        $('#wrong').text('Wrong: ' + wrong);
-        $('#unanswered').text('Unanswered: ' + unanswered);
     }
     // function timeConverter(t) {
 
