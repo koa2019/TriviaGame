@@ -52,41 +52,28 @@ window.onload = function() {
 
     // ----------quiz question functions----------------
     function gradeQuiz() {
-        var index = $(this).attr('data-index');
+        var index = $(this).attr('question-index');
         var correctAnswer = questions[index].correctAnswer;
-        userInput = $("input[name= opt" + index + " ]:checked").val();
-
-
-        // for (var x = 0; x < questions.length; x++) {
+        userInput = $("input[question-index = " + index + "]:checked").val();
 
         //     //CSS selector returns value of checked input based on each answer array
         //     // groups of radios have a name of opt0 or opt1 where 0 and 1 represents the question number
         //     userInput = $("input[name= opt" + x + " ]:checked").val();
 
-        //     
-
-        //     console.log('correctAnswer[' + x + '] = ' + correctAnswer);
-        //     console.log('userInput = ' + userInput);
-        //     console.log(userInput + ' =? ' + correctAnswer);
-        //     console.log(' ');
-
         if (userInput === correctAnswer) {
             isCorrect();
-            // console.log('inside if/else correct:  ' + correct);
         } else {
             isWrong();
-            // console.log('inside if/else wrong: ' + wrong);
         }
 
-        //     // else {
-        //     //     //  (userInput == null || timer <= 0) {
-        //     //     isUnanswered();
-        //     //     // console.log('inside if/else unanswered: ' + unanswered);
-        //     //     // }
-        //     // }
+        // if (userInput == null || timer <= 0) {
+        //     isUnanswered();
+        //     // console.log('inside if/else unanswered: ' + unanswered);
         // }
+
         console.log('Correct =  ' + correct);
         console.log('wrong: ' + wrong);
+        console.log('unanswered: ' + unanswered);
 
     }
 
@@ -99,13 +86,13 @@ window.onload = function() {
     function showQuestions() {
         var radio;
         for (var x = 0; x < questions.length; x++) {
-            console.log('my array');
             var questionTitle = $("<h2>").text(questions[x].prompt) //declare variable, writes prompt[x] in header2 tag & assigns it to variable
             $(".questions-container").append(questionTitle); //writes to html page by appending variable data value to div id
 
             var optionsContainer = $("<div>"); //declare varaible & creates a new div tag
-            var availableOptions = questions[x].answers; //assigns questions[x].answer[] to new variable
-            var answers = questions[x].answers;
+            var answers = questions[x].answers; //assigns the array of answers of questions[x] to varaible
+            // var availableOptions = questions[x].answers; 
+            console.log(answers);
             var a = answers[0],
                 b = answers[1],
                 c = answers[2];
@@ -134,29 +121,19 @@ window.onload = function() {
             //         //appends input & label html elements to page under div id=questions-container
             //         $(".questions-container").append(radio);
             //         $(".questions-container").append(label);
-
-
-            //         // console.log('inside x = ' + x);
-            //         // console.log('inside correct answer =' + questions[x].correctAnswer); 
             //     }
-            //     // console.log('outside x = ' + x);
-            //     // console.log('outside correct answer = ' + questions[x].correctAnswer); 
-            //     console.log(radio)
             //     radio.on('click', gradeQuiz);
         }
-
-
     }
-
-
 
     // ----------quiz display radio button functions----------------
     function makeRadio(val, questionIndex, answerIndex) {
 
         var optInput = $("<input type='radio'/>")
-            .attr('name', 'opt' + questionIndex)
+            // .attr('name', 'opt-' + questionIndex)
+            // .attr('data-index', questionIndex)
+            .attr('question-index', questionIndex)
             .attr('value', val)
-            .attr('data-index', questionIndex)
             .attr('id', 'question-' + questionIndex + '-' + answerIndex); // id needs to be unique and should have no spaces
         return optInput;
     }
